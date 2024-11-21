@@ -24,7 +24,7 @@ const KakaoLogin = ({ setUser }) => {
       console.log("apiUrl " + apiUrl);
 
       axios
-        .get(apiUrl, { withCredentials: true })
+        .get(apiUrl)
         .then((response) => {
           // 성공 시 처리
           console.log(response.data);
