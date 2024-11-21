@@ -14,7 +14,7 @@ const KakaoLogin = ({ setUser }) => {
   // api 요청에 필요한 토큰 저장
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code");
     setCode(code);
     // const secondUrl = process.env.REACT_APP_BASE_URL;
