@@ -38,7 +38,7 @@ const KakaoLogin = ({ setUser }) => {
           console.error("Error during Kakao login:", error);
         });
     }
-  }, [location.search, setUser]);
+  }, [location.search, setCode, setUser, setUserToken, setToken, navigate]);
 
   return <div>카카오 로그인 처리 중...</div>;
 };
