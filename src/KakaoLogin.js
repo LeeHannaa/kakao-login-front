@@ -14,10 +14,10 @@ const KakaoLogin = ({ setUser }) => {
   // api 요청에 필요한 토큰 저장
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = new URLSearchParams(location.search);
+    console.log("searchParams : " + searchParams);
     const code = searchParams.get("code");
     setCode(code);
-    // const secondUrl = process.env.REACT_APP_BASE_URL;
 
     if (code) {
       const apiUrl = `${process.env.REACT_APP_BASE_URL}/auth/kakao-login?code=${code}`;
@@ -38,7 +38,6 @@ const KakaoLogin = ({ setUser }) => {
           console.error("Error during Kakao login:", error);
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, setUser]);
 
   return <div>카카오 로그인 처리 중...</div>;
