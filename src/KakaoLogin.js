@@ -24,7 +24,9 @@ const KakaoLogin = ({ setUser }) => {
       console.log("apiUrl " + apiUrl);
 
       axios
-        .get(apiUrl)
+        .get(apiUrl, {
+          headers: { Referer: "https://elegant-puppy-7c8193.netlify.app/" },
+        })
         .then((response) => {
           // 성공 시 처리
           console.log(response.data);
