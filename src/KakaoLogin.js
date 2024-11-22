@@ -20,7 +20,7 @@ const KakaoLogin = ({ setUser }) => {
     setCode(code);
 
     if (code) {
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/scrd/auth/kakao-login?code=${code}`;
+      const apiUrl = `${process.env.REACT_APP_BASE_URL}/auth/kakao-login?code=${code}`;
       console.log("apiUrl " + apiUrl);
 
       axios
