@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { tokenState, codeState, userTokenState } from "./atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  tokenState,
+  codeState,
+  userTokenState,
+  refreshTokenState,
+} from "./atom";
 
 function App({ user, setUser }) {
   const [every, setEvery] = useState(null);
@@ -9,6 +14,7 @@ function App({ user, setUser }) {
   const [error, setError] = useState(null);
   const [code, setCode] = useRecoilState(codeState);
   const [token, setToken] = useRecoilState(tokenState);
+  const setRefreshToken = useSetRecoilState(refreshTokenState);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
 
   const logoutClickHandler = () => {
@@ -18,6 +24,7 @@ function App({ user, setUser }) {
     setUser(null);
     setEvery(null);
     setTest(null);
+    setRefreshToken(null);
   };
 
   const headers = {
@@ -91,6 +98,7 @@ function App({ user, setUser }) {
           <p>
             앞으로 header에 넣어서 확인받을 accessToken 값 : {user.accessToken}
           </p>
+          <p>refreshToken 확인 : {user.refreshToken}</p>
         </>
       ) : (
         <p>로그인 후 사용자 정보를 확인하세요.</p>

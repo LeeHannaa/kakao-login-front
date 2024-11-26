@@ -2,13 +2,19 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
-import { userTokenState, tokenState, codeState } from "./atom";
+import {
+  userTokenState,
+  tokenState,
+  codeState,
+  refreshTokenState,
+} from "./atom";
 
 const KakaoLogin = ({ setUser }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const setCode = useSetRecoilState(codeState);
   const setUserToken = useSetRecoilState(userTokenState);
+  const setRefreshToken = useSetRecoilState(refreshTokenState);
   const setToken = useSetRecoilState(tokenState);
 
   // api 요청에 필요한 토큰 저장
@@ -26,7 +32,7 @@ const KakaoLogin = ({ setUser }) => {
       axios
         .get(apiUrl, {
           headers: {
-            Referer: "https://elegant-puppy-7c8193.netlify.app/",
+            Referer: "http://localhost:3000/",
           },
         })
         .then((response) => {
@@ -35,6 +41,7 @@ const KakaoLogin = ({ setUser }) => {
           setUser(response.data);
           setUserToken({ isLoggedIn: true });
           setToken(response.data.accessToken);
+          setRefreshToken(response.data.refreshToken);
           navigate("/");
         })
         .catch((error) => {
@@ -42,7 +49,15 @@ const KakaoLogin = ({ setUser }) => {
           console.error("Error during Kakao login:", error);
         });
     }
-  }, [location.search, setCode, setUser, setUserToken, setToken, navigate]);
+  }, [
+    location.search,
+    setCode,
+    setUser,
+    setUserToken,
+    setToken,
+    setRefreshToken,
+    navigate,
+  ]);
 
   return <div>카카오 로그인 처리 중...</div>;
 };

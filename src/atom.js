@@ -10,6 +10,11 @@ export const tokenState = atom({
   default: null,
 });
 
+export const refreshTokenState = atom({
+  key: "refreshToken",
+  default: null,
+});
+
 export const codeState = atom({
   key: "code",
   default: null,
