@@ -36,12 +36,21 @@ const KakaoLogin = ({ setUser }) => {
           },
         })
         .then((response) => {
+          // 헤더에서 accessToken과 refreshToken을 가져와서 상태에 저장
+          const accessToken = response.headers["authorization"].split(" ")[1]; // Authorization 헤더
+          const refreshToken = response.headers["x-refresh-token"]; // X-Refresh-Token 헤더
+
           // 성공 시 처리
-          console.log(response.data);
+          console.log(
+            response.data,
+            "accessToken : ",
+            accessToken,
+            ", refreshToken : " + refreshToken
+          );
           setUser(response.data);
           setUserToken({ isLoggedIn: true });
-          setToken(response.data.accessToken);
-          setRefreshToken(response.data.refreshToken);
+          setToken(accessToken); // accessToken 저장
+          setRefreshToken(refreshToken); // refreshToken 저장
           navigate("/");
         })
         .catch((error) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   tokenState,
   codeState,
@@ -14,7 +14,7 @@ function App({ user, setUser }) {
   const [error, setError] = useState(null);
   const [code, setCode] = useRecoilState(codeState);
   const [token, setToken] = useRecoilState(tokenState);
-  const setRefreshToken = useSetRecoilState(refreshTokenState);
+  const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
 
   const logoutClickHandler = () => {
@@ -95,14 +95,12 @@ function App({ user, setUser }) {
       {user ? (
         <>
           <p>{user.name}</p>
-          <p>
-            앞으로 header에 넣어서 확인받을 accessToken 값 : {user.accessToken}
-          </p>
-          <p>refreshToken 확인 : {user.refreshToken}</p>
         </>
       ) : (
         <p>로그인 후 사용자 정보를 확인하세요.</p>
       )}
+      {token && <p>앞으로 header에 넣어서 확인받을 accessToken 값 : {token}</p>}
+      {refreshToken && <p>refreshToken 확인 : {refreshToken}</p>}
       {every && <p>권한 없이 이용 가능한 api : {every}</p>}
       {test && <p>권한이 있어야만 이용 가능한 api : {test}</p>}
       {error && <p>{error}</p>}
