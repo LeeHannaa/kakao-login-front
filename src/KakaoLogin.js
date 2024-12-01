@@ -32,8 +32,8 @@ const KakaoLogin = ({ setUser }) => {
       axios
         .get(apiUrl, {
           headers: {
-            Referer: "http://localhost:3000/",
-            // Referer: "https://elegant-puppy-7c8193.netlify.app/",
+            // Referer: "http://localhost:3000/",
+            Referer: "https://elegant-puppy-7c8193.netlify.app/",
           },
         })
         .then((response) => {
