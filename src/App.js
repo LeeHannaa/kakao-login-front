@@ -7,6 +7,7 @@ import {
   userTokenState,
   refreshTokenState,
 } from "./atom";
+import useApi from "./hooks/useApi";
 
 function App({ user, setUser }) {
   const [every, setEvery] = useState(null);
@@ -16,6 +17,7 @@ function App({ user, setUser }) {
   const [token, setToken] = useRecoilState(tokenState);
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState);
   const [userToken, setUserToken] = useRecoilState(userTokenState);
+  const sendRequest = useApi(refreshToken);
 
   const logoutClickHandler = () => {
     setCode(null);
@@ -27,29 +29,20 @@ function App({ user, setUser }) {
     setRefreshToken(null);
   };
 
-  const headers = {
-    ...(token && { Authorization: "Bearer " + token }),
-    // "Content-Type": "application/json", // 필요 시 추가
-  };
-
   const handleLoginClick = () => {
     window.location.href = process.env.REACT_APP_KAKAO_URL;
   };
 
-  const testApiClick = () => {
+  const testApiClick = async () => {
     console.log(token);
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/test`, { headers })
-      .then((response) => {
-        // 성공 시 처리
-        setTest(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // 오류 시 처리
-        setError(error.message);
-        console.error("Error test api: ", error);
-      });
+    try {
+      const response = await sendRequest(token, "/api/test", "GET");
+      setTest(response); // 성공적으로 데이터를 가져오면 상태 업데이트
+      console.log("Every API response:", response);
+    } catch (error) {
+      setError(error.message); // 에러 발생 시 상태 업데이트
+      console.error("Error in everyApiClick:", error);
+    }
   };
 
   const everyApiClick = () => {
